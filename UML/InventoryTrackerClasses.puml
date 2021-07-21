@@ -1,0 +1,65 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class InventoryTracker {
+    +main()
+    +start()
+}
+
+class SceneManager {
+    scenes: Map<String, Scene>
+
+    load()
+    getScene(String): Scene
+}
+
+class MainWindowController {
+    items: ItemModel
+
+    addItemButtonClicked(EventHandler)
+    removeItemButtonClicked(EventHandler)
+    editItemButtonClicked(EventHandler)
+}
+
+class ItemModel {
+    -list: ObservableList<Item>
+
+    +addItem()
+    +removeItem()
+    +searchList
+}
+
+class Item {
+    -value: currency
+    -serialNumber: String
+    -name: String
+
+    +getValue()
+    +getSerialNumber()
+    +getName()
+    +validateValue()
+    +validateSerialNumber()
+    +validateName()
+}
+
+class EditItemWindowController {
+
+}
+
+class AddItemButtonClicked {
+
+}
+
+class SearchWindowController {
+}
+
+javafx.Application <|-- InventoryTracker
+InventoryTracker -- SceneManager
+SceneManager -- MainWindowController
+SceneManager -- EditItemWindowController
+SceneManager -- AddItemButtonClicked
+SceneManager -- SearchWindowController
+MainWindowController o-- ItemModel
+ItemModel *-- Item
+
+@enduml
