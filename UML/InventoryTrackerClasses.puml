@@ -26,7 +26,8 @@ class ItemModel {
 
     +addItem()
     +removeItem()
-    +searchList
+    +isSerialNumberUnique()
+    +searchList()
 }
 
 class Item {
@@ -34,8 +35,11 @@ class Item {
     -serialNumber: String
     -name: String
 
+    +setValue()
     +getValue()
+    +setSerialNumber()
     +getSerialNumber()
+    +setName()
     +getName()
     +validateValue()
     +validateSerialNumber()

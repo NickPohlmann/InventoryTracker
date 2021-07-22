@@ -5,6 +5,7 @@
 
 package ucf.assignments;
 
+import javax.naming.Name;
 import java.util.Currency;
 
 //This class creates the object Item
@@ -15,19 +16,18 @@ public class Item {
     private String serialNumber;
     private String name;
 
-    //Setter
+    //Constructor
     public Item(Currency value, String serialNumber, String name) {
-        //if true set the value
-        if(validateValue()) {
+
+        setValue(value);
+        setSerialNumber(serialNumber);
+        setName(name);
+    }
+
+    //Setter for value
+    public void setValue(Currency value) {
+        if(validateValue(value)) {
             this.value = value;
-        }
-        //if true set the value
-        if(validateSerialNumber()) {
-            this.serialNumber = serialNumber;
-        }
-        //if true set the value
-        if(validateName()) {
-            this.name = name;
         }
     }
 
@@ -36,9 +36,23 @@ public class Item {
         return this.value;
     }
 
+    //Setter for serial number
+    public void setSerialNumber(String serialNumber) {
+        if(validateSerialNumber()) {
+            this.serialNumber = serialNumber;
+        }
+    }
+
     //Getter for serial number
     public String getSerialNumber() {
         return this.serialNumber;
+    }
+
+    //Setter for name
+    public void setName(String name) {
+        if(validateName()) {
+            this.name = name;
+        }
     }
 
     //Getter for name
@@ -47,10 +61,10 @@ public class Item {
     }
 
     //Validation for value
-    public Boolean validateValue() {
+    public Boolean validateValue(Currency value) {
         Boolean isValid = false;
         //if the currency code is "USD" return true
-        if(this.value.getCurrencyCode() == "USD") {
+        if(value.getCurrencyCode() == "USD") {
             isValid = true;
         }
         return isValid;
