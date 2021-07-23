@@ -116,7 +116,7 @@ public class MainWindowController implements Initializable {
         serialNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Item, String> t) {
-                ((Item) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSerialNumber(t.getNewValue());
+                 ((Item) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSerialNumber(t.getNewValue());
             }
         });
 
@@ -140,9 +140,25 @@ public class MainWindowController implements Initializable {
     }
 
     //This sets the edited serial number from the table to the item
-    public void editSerialNumber(TableColumn.CellEditEvent<Item, String> todoItemStringCellEditEvent) {
+    public void editSerialNumber(TableColumn.CellEditEvent<Item, String> itemStringCellEditEvent) {
         Item item = table.getSelectionModel().getSelectedItem();
-        item.setSerialNumber(todoItemStringCellEditEvent.getNewValue());
+        if (itemModel.isSerialNumberUnique(item.getSerialNumber())){
+            item.setSerialNumber(itemStringCellEditEvent.getNewValue());
+        } else {
+            Stage stage = new Stage();
+            Parent root = null;
+            //Loads new window
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/SerialNumberErrorMessage.fxml"));
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.setScene(new Scene(root));
+            stage.setTitle("Error Message Window");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+        }
     }
 
     //This sets the edited name from the table to the item

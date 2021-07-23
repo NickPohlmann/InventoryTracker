@@ -6,11 +6,17 @@
 package ucf.assignments;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
+import java.io.IOException;
 import java.math.BigDecimal;
 
 public class AddItemWindowController {
@@ -37,13 +43,30 @@ public class AddItemWindowController {
         String serialNumber = addItemSerialNumberTextBox.getText();
         //Assigns the String from the text box to name
         String name = addItemNameTextBox.getText();
-        //creates the new item with the values from the text boxes
-        Item item = new Item(value, serialNumber, name);
-        //adds item the list
-        itemModel.addItem(item);
-        Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
-        //closes the stage and returns to the main window
-        stage.close();
+        //Throw Error message window if serial number already exists
+        if (itemModel.isSerialNumberUnique(serialNumber)) {
+            //creates the new item with the values from the text boxes
+            Item item = new Item(value, serialNumber, name);
+            //adds item the list
+            itemModel.addItem(item);
+            Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
+            //closes the stage and returns to the main window
+            stage.close();
+        } else {
+            Stage stage = new Stage();
+            Parent root = null;
+            //Loads new window
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/SerialNumberErrorMessage.fxml"));
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.setScene(new Scene(root));
+            stage.setTitle("Error Message Window");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+        }
     }
 
     public void setItemModel(ItemModel itemModel) {
