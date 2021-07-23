@@ -20,7 +20,7 @@ public class ItemModel {
     }
 
     //This function will add a new item to the current array list
-    public Boolean addItem (Item item) {
+    public Boolean addItem(Item item) {
         if(isSerialNumberUnique(item.getSerialNumber())) {
             list.add(item);
             return true;

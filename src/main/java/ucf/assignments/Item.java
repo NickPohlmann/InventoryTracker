@@ -6,18 +6,19 @@
 package ucf.assignments;
 
 import javax.naming.Name;
+import java.math.BigDecimal;
 import java.util.Currency;
 
 //This class creates the object Item
 public class Item {
 
     //Instance variables
-    private Currency value;
+    private BigDecimal value;
     private String serialNumber;
     private String name;
 
     //Constructor
-    public Item(Currency value, String serialNumber, String name) {
+    public Item(BigDecimal value, String serialNumber, String name) {
 
         setValue(value);
         setSerialNumber(serialNumber);
@@ -25,20 +26,18 @@ public class Item {
     }
 
     //Setter for value
-    public void setValue(Currency value) {
-        if(validateValue(value)) {
-            this.value = value;
-        }
+    public void setValue(BigDecimal value) {
+        this.value = value.setScale(2);
     }
 
     //Getter for value
-    public Currency getValue() {
+    public BigDecimal getValue() {
         return this.value;
     }
 
     //Setter for serial number
     public void setSerialNumber(String serialNumber) {
-        if(validateSerialNumber()) {
+        if(validateSerialNumber(serialNumber)) {
             this.serialNumber = serialNumber;
         }
     }
@@ -50,7 +49,7 @@ public class Item {
 
     //Setter for name
     public void setName(String name) {
-        if(validateName()) {
+        if(validateName(name)) {
             this.name = name;
         }
     }
@@ -60,33 +59,24 @@ public class Item {
         return this.name;
     }
 
-    //Validation for value
-    public Boolean validateValue(Currency value) {
-        Boolean isValid = false;
-        //if the currency code is "USD" return true
-        if(value.getCurrencyCode() == "USD") {
-            isValid = true;
-        }
-        return isValid;
-    }
-
     //Validation for serial number
-    public Boolean validateSerialNumber() {
+    public Boolean validateSerialNumber(String serialNumber) {
         Boolean isValid = false;
         //if the serial number is 10 in length and is only letters and numbers return true
-        if(this.serialNumber.length() == 10 && this.serialNumber.matches("[a-zA-Z0-9]*")){
+        if(serialNumber.length() == 10 && serialNumber.matches("[a-zA-Z0-9]*")){
             isValid = true;
         }
         return isValid;
     }
 
     //Validation for name
-    public Boolean validateName() {
+    public Boolean validateName(String name) {
         Boolean isValid = false;
         //if 2 <= name <= 256 then return true
-        if(this.name.length() >= 2 && this.name.length() <= 256) {
+        if(name.length() >= 2 && name.length() <= 256) {
             isValid = true;
         }
         return isValid;
     }
+
 }

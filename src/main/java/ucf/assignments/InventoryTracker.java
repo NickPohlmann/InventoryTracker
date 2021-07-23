@@ -21,12 +21,12 @@ public class InventoryTracker extends Application{
 
     @Override
     public void start(Stage primaryStage) {
+        System.out.println("Hello");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/MainWindow.fxml"));
             Parent root = loader.load();
             MainWindowController controller = loader.getController();
             controller.setStage(primaryStage);
-
 
             Scene scene = new Scene(root);
 
