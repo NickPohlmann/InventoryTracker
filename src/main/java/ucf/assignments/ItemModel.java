@@ -14,9 +14,14 @@ public class ItemModel {
     //This list will hold all of the items in the inventory tracker
     private ObservableList<Item> list;
 
-    //constructor for the array list
+    //constructor for the list
     public ItemModel() {
         this.list = FXCollections.observableArrayList();
+    }
+
+    //getter for the list
+    public ObservableList<Item> getList () {
+        return this.list;
     }
 
     //This function will add a new item to the current array list

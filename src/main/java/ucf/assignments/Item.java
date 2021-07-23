@@ -7,6 +7,7 @@ package ucf.assignments;
 
 import javax.naming.Name;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 
 //This class creates the object Item
@@ -19,7 +20,6 @@ public class Item {
 
     //Constructor
     public Item(BigDecimal value, String serialNumber, String name) {
-
         setValue(value);
         setSerialNumber(serialNumber);
         setName(name);
@@ -27,7 +27,7 @@ public class Item {
 
     //Setter for value
     public void setValue(BigDecimal value) {
-        this.value = value.setScale(2);
+        this.value = value.setScale(2, RoundingMode.HALF_UP);
     }
 
     //Getter for value

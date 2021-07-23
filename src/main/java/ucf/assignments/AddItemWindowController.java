@@ -31,12 +31,18 @@ public class AddItemWindowController {
 
     @FXML
     void addNewItemButtonClicked(ActionEvent event) {
+        //Changes the String from the text box to a double and then changes it to a BigDecimal and assigns it to value
         BigDecimal value = BigDecimal.valueOf(Double.parseDouble(addItemValueTextBox.getText()));
+        //Assigns the String from the text box to serialNumber
         String serialNumber = addItemSerialNumberTextBox.getText();
+        //Assigns the String from the text box to name
         String name = addItemNameTextBox.getText();
+        //creates the new item with the values from the text boxes
         Item item = new Item(value, serialNumber, name);
+        //adds item the list
         itemModel.addItem(item);
         Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
+        //closes the stage and returns to the main window
         stage.close();
     }
 
