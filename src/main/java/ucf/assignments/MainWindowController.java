@@ -40,7 +40,7 @@ public class MainWindowController implements Initializable {
     private Button removeItemButton;
 
     @FXML
-    private Button editItemButton;
+    private Button searchItemButton;
 
     @FXML
     private MenuItem saveAs;
@@ -89,13 +89,35 @@ public class MainWindowController implements Initializable {
             e.printStackTrace();
         }
         stage.setScene(new Scene(root));
-        stage.setTitle("My modal window");
+        stage.setTitle("Add Item Window");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(
                 ((Node)actionEvent.getSource()).getScene().getWindow() );
         AddItemWindowController addItemWindowController = loader.getController();
         //Passes AddItemWindowController the current itemModel
         addItemWindowController.setItemModel(itemModel);
+        stage.show();
+    }
+
+    @FXML
+    void searchItemClicked(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        Parent root = null;
+        //Loads new window
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/SearchWindow.fxml"));
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.setScene(new Scene(root));
+        stage.setTitle("Search Window");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(
+                ((Node)actionEvent.getSource()).getScene().getWindow() );
+        SearchWindowController searchWindowController = loader.getController();
+        //Passes SearchWindowController the current itemModel
+        searchWindowController.setItemModel(itemModel);
         stage.show();
     }
 
@@ -145,13 +167,6 @@ public class MainWindowController implements Initializable {
                 editSerialNumber(t);
             }
         });
-//        serialNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, String>>() {
-//            @Override
-//            public void handle(TableColumn.CellEditEvent<Item, String> t) {
-//                editSerialNumber(t.getTableView().getItems().get(t.getTablePosition().getRow())));
-//                ((Item) t.getTableView().getItems().get(t.getTablePosition().getRow())).editSerialNumber(t.getNewValue());
-//            }
-//        });
 
         name.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, String>>() {
@@ -200,9 +215,4 @@ public class MainWindowController implements Initializable {
         Item item = table.getSelectionModel().getSelectedItem();
         item.setName(todoItemStringCellEditEvent.getNewValue());
     }
-
-    public void editItemClicked(ActionEvent actionEvent) {
-    }
-
-
 }
