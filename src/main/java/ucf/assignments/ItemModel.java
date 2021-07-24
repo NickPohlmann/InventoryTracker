@@ -7,7 +7,11 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.io.*;
+import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Scanner;
 
 public class ItemModel {
 
@@ -60,6 +64,89 @@ public class ItemModel {
             }
         }
         return searchedList;
+    }
+
+    //This imports a file that was previously created by the program
+    public void importItemsFromFile(File file) {
+        Scanner in = null;
+        try {
+            in = new Scanner(file);
+            //Scan file till no more lines
+            while (in.hasNextLine()) {
+                String data = in.nextLine();
+                //the data is separated by tabs
+                String[] splitData = data.split("\t");
+                //Turns splitData[0] from str into a BigDecimal
+                BigDecimal value = BigDecimal.valueOf(Double.parseDouble(splitData[0]));
+                //creates the item
+                Item item = new Item(value, splitData[1], splitData[2]);
+                //Use the addItem function to add the item that was just created
+                addItem(item);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //This function will create a file to export
+    public void generateExportFile(File file) {
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        //Break file into multiple str by splitting on "."
+        String[] fileNameSplit = file.getName().split("\\.");
+        //Get the last str which will be the .txt, .html, .json
+        String fileExtensionSplit = fileNameSplit[fileNameSplit.length - 1];
+        //If statement to call the right function to create the right type of file
+        if (fileExtensionSplit.equals("txt")) {
+            fw = createTextFile(file);
+        } else if (fileExtensionSplit.equals("html")) {
+            bw = createHTMLFile(file);
+        }
+    }
+
+    private BufferedWriter createHTMLFile(File file) {
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            fw = new FileWriter(file);
+            bw = new BufferedWriter(fw);
+
+            bw.write("<!DOCTYPE html>" +
+                    "<html>" +
+                    "<head>" +
+                    "<title>Inventory Tracker</title>" +
+                    "</head>" +
+                    "<table style='width:100%'>");
+            for (Item item : list) {
+                bw.write("<tr>"+
+                        "<th>" + item.getValue() + "</th>" +
+                        "<th>" + item.getSerialNumber() + "</th>" +
+                        "<th>" + item.getName() + "</th>" +
+                        "</tr>"
+                );
+            }
+            bw.write("</table>"+
+                    "</html>");
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bw;
+    }
+
+    private FileWriter createTextFile(File file) {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(file);
+            for (Item item : list) {
+                fw.write(item.getValue() + "\t" + item.getSerialNumber() + "\t" + item.getName() + "\n");
+                fw.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fw;
     }
 
 }

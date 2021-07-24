@@ -53,20 +53,24 @@ public class AddItemWindowController {
             //closes the stage and returns to the main window
             stage.close();
         } else {
-            Stage stage = new Stage();
-            Parent root = null;
-            //Loads new window
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/SerialNumberErrorMessage.fxml"));
-            try {
-                root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            stage.setScene(new Scene(root));
-            stage.setTitle("Error Message Window");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.show();
+            openSerialNumberErrorMessage();
         }
+    }
+
+    private void openSerialNumberErrorMessage() {
+        Stage stage = new Stage();
+        Parent root = null;
+        //Loads new window
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/SerialNumberErrorMessage.fxml"));
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.setScene(new Scene(root));
+        stage.setTitle("Error Message Window");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.show();
     }
 
     public void setItemModel(ItemModel itemModel) {

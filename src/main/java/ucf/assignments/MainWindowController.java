@@ -18,11 +18,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.util.converter.BigDecimalStringConverter;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -40,9 +42,11 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button editItemButton;
 
+    @FXML
+    private MenuItem saveAs;
 
     @FXML
-    private MenuItem saveAsClicked;
+    private MenuItem importList;
 
     @FXML
     private TableView<Item> table;
@@ -95,6 +99,28 @@ public class MainWindowController implements Initializable {
         stage.show();
     }
 
+    //This will export the list into a .txt, .html, or .json file
+    @FXML
+    void saveAsClicked(ActionEvent event) {
+        FileChooser exportfileChooser = new FileChooser();
+        exportfileChooser.setTitle("Export File");
+        File file = exportfileChooser.showSaveDialog(stage);
+        if (file != null) {
+            String fileName = exportfileChooser.getInitialFileName();
+            itemModel.generateExportFile(file);
+        }
+    }
+
+    @FXML
+    void importListClicked(ActionEvent event) {
+        FileChooser importfileChooser = new FileChooser();
+        importfileChooser.setTitle("Select File");
+        File file = importfileChooser.showOpenDialog(stage);
+        if (file != null) {
+            itemModel.importItemsFromFile(file);
+            itemModel = new ItemModel();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -116,9 +142,16 @@ public class MainWindowController implements Initializable {
         serialNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Item, String> t) {
-                 ((Item) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSerialNumber(t.getNewValue());
+                editSerialNumber(t);
             }
         });
+//        serialNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, String>>() {
+//            @Override
+//            public void handle(TableColumn.CellEditEvent<Item, String> t) {
+//                editSerialNumber(t.getTableView().getItems().get(t.getTablePosition().getRow())));
+//                ((Item) t.getTableView().getItems().get(t.getTablePosition().getRow())).editSerialNumber(t.getNewValue());
+//            }
+//        });
 
         name.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, String>>() {
@@ -158,6 +191,7 @@ public class MainWindowController implements Initializable {
             stage.setTitle("Error Message Window");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.show();
+            itemStringCellEditEvent.getOldValue();
         }
     }
 
@@ -169,4 +203,6 @@ public class MainWindowController implements Initializable {
 
     public void editItemClicked(ActionEvent actionEvent) {
     }
+
+
 }
