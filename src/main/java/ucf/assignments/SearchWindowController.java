@@ -5,6 +5,8 @@
 
 package ucf.assignments;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,8 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
 
@@ -38,20 +38,16 @@ public class SearchWindowController {
     @FXML
     private TableColumn<Item, String> nameColumn;
 
+    //This function will take in the text for the text box and put any that matches the list into the table
     @FXML
     void searchButtonClicked(ActionEvent event) {
-        ItemModel searchedItemModel = new ItemModel();
+        ObservableList<Item> searchedList =  FXCollections.observableArrayList();
         //This will get the string from the text box
         String searchedString = searchTextBox.getText();
-        for (Item item : itemModel.getList()) {
-            //if the string in the search box is a name or serial number the add it to the new item model
-            if(item.getName().equals(searchedString) || item.getSerialNumber().equals(searchedString)) {
-                searchedItemModel.addItem(item);
-            }
-        }
+        //calls the function searchList from ItemModel and pass in the text box
+        searchedList = itemModel.searchList(searchedString);
         //Tells the table to show current itemModel
-        TableView.setItems(searchedItemModel.getList());
-
+        TableView.setItems(searchedList);
         valueColumn.setCellValueFactory(new PropertyValueFactory<Item, BigDecimal>("value"));
         serialNumberColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("serialNumber"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));

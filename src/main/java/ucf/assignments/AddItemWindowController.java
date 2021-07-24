@@ -57,6 +57,7 @@ public class AddItemWindowController {
         }
     }
 
+    //This function will open the serial number error window when called
     private void openSerialNumberErrorMessage() {
         Stage stage = new Stage();
         Parent root = null;
@@ -73,6 +74,7 @@ public class AddItemWindowController {
         stage.show();
     }
 
+    //Takes the itemModel from where it was called
     public void setItemModel(ItemModel itemModel) {
         this.itemModel = itemModel;
     }

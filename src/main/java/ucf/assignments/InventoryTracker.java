@@ -15,14 +15,16 @@ import java.io.IOException;
 
 public class InventoryTracker extends Application{
 
+    //Basic start up
     public static void main(String[] args) {
         launch(args);
     }
 
+    //This will open the primary stage
     @Override
     public void start(Stage primaryStage) {
-        System.out.println("Hello");
         try {
+            //opens MainWindow
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ucf.assignments/MainWindow.fxml"));
             Parent root = loader.load();
             MainWindowController controller = loader.getController();
@@ -31,7 +33,9 @@ public class InventoryTracker extends Application{
             Scene scene = new Scene(root);
 
             primaryStage.setScene(scene);
+            //Set title of main window to Inventory Tracker
             primaryStage.setTitle("Inventory Tracker");
+            //This will actually put the Main Window to the screen
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

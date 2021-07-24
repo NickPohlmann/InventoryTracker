@@ -90,21 +90,20 @@ public class ItemModel {
 
     //This function will create a file to export
     public void generateExportFile(File file) {
-        FileWriter fw = null;
-        BufferedWriter bw = null;
+
         //Break file into multiple str by splitting on "."
         String[] fileNameSplit = file.getName().split("\\.");
         //Get the last str which will be the .txt, .html, .json
         String fileExtensionSplit = fileNameSplit[fileNameSplit.length - 1];
         //If statement to call the right function to create the right type of file
         if (fileExtensionSplit.equals("txt")) {
-            fw = createTextFile(file);
+            createTextFile(file);
         } else if (fileExtensionSplit.equals("html")) {
-            bw = createHTMLFile(file);
+            createHTMLFile(file);
         }
     }
 
-    private BufferedWriter createHTMLFile(File file) {
+    private void createHTMLFile(File file) {
         FileWriter fw = null;
         BufferedWriter bw = null;
         try {
@@ -131,10 +130,9 @@ public class ItemModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return bw;
     }
 
-    private FileWriter createTextFile(File file) {
+    private void createTextFile(File file) {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file);
@@ -145,8 +143,6 @@ public class ItemModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return fw;
     }
 
 }

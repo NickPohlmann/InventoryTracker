@@ -27,6 +27,7 @@ public class Item {
 
     //Setter for value
     public void setValue(BigDecimal value) {
+        //.setScale is setting the BigDecimal to two places and rounds up at .005
         this.value = value.setScale(2, RoundingMode.HALF_UP);
     }
 

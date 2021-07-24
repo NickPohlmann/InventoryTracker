@@ -6,19 +6,16 @@ class InventoryTracker {
     +start()
 }
 
-class SceneManager {
-    scenes: Map<String, Scene>
-
-    load()
-    getScene(String): Scene
-}
-
 class MainWindowController {
     items: ItemModel
 
-    addItemButtonClicked(EventHandler)
-    removeItemButtonClicked(EventHandler)
-    editItemButtonClicked(EventHandler)
+    addItemClicked(EventHandler)
+    removeItemClicked(EventHandler)
+    searchItemClicked(EventHandler)
+    importListClicked(EventHandler)
+    saveAsClicked(EventHandler)
+    initialize()
+    editSerialNumber()
 }
 
 class ItemModel {
@@ -46,23 +43,21 @@ class Item {
     +validateName()
 }
 
-class EditItemWindowController {
-
-}
-
 class AddItemButtonClicked {
-
+    addNewItemButtonClicked(EventHandler)
+    openSerialNumberErrorMessage()
+    setItemModel()
 }
 
 class SearchWindowController {
+    searchButtonClicked(EventHandler)
+    setItemModel()
 }
 
 javafx.Application <|-- InventoryTracker
-InventoryTracker -- SceneManager
-SceneManager -- MainWindowController
-SceneManager -- EditItemWindowController
-SceneManager -- AddItemButtonClicked
-SceneManager -- SearchWindowController
+InventoryTracker -- MainWindowController
+MainWindowController -- AddItemButtonClicked
+MainWindowController -- SearchWindowController
 MainWindowController o-- ItemModel
 ItemModel *-- Item
 
