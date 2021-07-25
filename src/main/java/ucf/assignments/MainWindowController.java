@@ -141,7 +141,6 @@ public class MainWindowController implements Initializable {
         //if the file exists, open and load it
         if (file != null) {
             itemModel.importItemsFromFile(file);
-            itemModel = new ItemModel();
         }
     }
 
@@ -169,6 +168,7 @@ public class MainWindowController implements Initializable {
             @Override
             public void handle(TableColumn.CellEditEvent<Item, String> t) {
                 editSerialNumber(t);
+
             }
         });
 
@@ -208,7 +208,10 @@ public class MainWindowController implements Initializable {
             stage.setTitle("Error Message Window");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.show();
-            itemStringCellEditEvent.getOldValue();
+
+            //refresh cell to show saved (old) value
+            itemStringCellEditEvent.getTableView().getColumns().get(itemStringCellEditEvent.getTablePosition().getRow()).setVisible(false);
+            itemStringCellEditEvent.getTableView().getColumns().get(itemStringCellEditEvent.getTablePosition().getRow()).setVisible(true);
         }
     }
 }
