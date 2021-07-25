@@ -7,6 +7,7 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -70,5 +71,57 @@ public class ItemModelTest {
         //Set actual to the size of the list after the item has been removed
         int actual = itemModel.getList().size();
         assertEquals(expected, actual);
+    }
+
+    //This will test isSerialNumberUnique for a serial number that is already in the list
+    @Test
+    void testIsSerialNumberUniqueWithRepeatedSerialNumber() {
+        //Create itemModel which will use a loop to add the items
+        ItemModel itemModel = new ItemModel();
+        for (int i = 0; i < 8; i++) {
+            BigDecimal value = BigDecimal.valueOf(19.87);
+            String serialNumber = String.format("asdfghjkl%d",i);
+            String name = "test";
+            Item item = new Item(value, serialNumber, name);
+            itemModel.addItem(item);
+        }
+        Boolean actual = itemModel.isSerialNumberUnique("asdfghjkl5");
+        Boolean expected = false;
+        assertEquals(expected, actual);
+    }
+
+    //This will test isSerialNumberUnique for a serial number that isn't already in the list
+    @Test
+    void testIsSerialNumberUniqueWithUniqueSerialNumber() {
+        //Create itemModel which will use a loop to add the items
+        ItemModel itemModel = new ItemModel();
+        for (int i = 0; i < 8; i++) {
+            BigDecimal value = BigDecimal.valueOf(19.87);
+            String serialNumber = String.format("asdfghjkl%d",i);
+            String name = "test";
+            Item item = new Item(value, serialNumber, name);
+            itemModel.addItem(item);
+        }
+        Boolean actual = itemModel.isSerialNumberUnique("asdfghjklo");
+        Boolean expected = true;
+        assertEquals(expected, actual);
+    }
+
+    //This will test searchList for searching a list for a name
+    @Test
+    void testSearchListForName() {
+        //Create itemModel which will use a loop to add the items
+        ItemModel itemModel = new ItemModel();
+        for (int i = 0; i < 8; i++) {
+            BigDecimal value = BigDecimal.valueOf(19.87);
+            String serialNumber = String.format("asdfghjkl%d",i);
+            String name = String.format("test%d", i);
+            Item item = new Item(value, serialNumber, name);
+            itemModel.addItem(item);
+        }
+        ObservableList<Item> actualList = itemModel.searchList("test5");
+        ObservableList<Item> expectedList = new ObservableListBase<Item>();
+        BigDecimal value = BigDecimal.valueOf(19.87);
+        Item expectedItem = new Item()
     }
 }
