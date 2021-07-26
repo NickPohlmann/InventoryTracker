@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.MainWindowController">
+   <children>
+      <MenuBar layoutX="141.0" layoutY="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="saveAs" mnemonicParsing="false" onAction="#saveAsClicked" text="Save As" />
+                  <MenuItem fx:id="importList" mnemonicParsing="false" onAction="#importListClicked" text="Import LIst" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TableView fx:id="table" layoutY="27.0" prefHeight="378.0" prefWidth="730.0">
+        <columns>
+          <TableColumn fx:id="value" prefWidth="75.0" text="Value" />
+          <TableColumn fx:id="serialNumber" prefWidth="88.0" text="Serial Number" />
+            <TableColumn fx:id="name" prefWidth="566.0" text="Name" />
+        </columns>
+      </TableView>
+      <ButtonBar layoutY="405.0" prefHeight="73.0" prefWidth="730.0">
+        <buttons>
+            <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemClicked" text="Add Item" />
+            <Button fx:id="removeItemButton" mnemonicParsing="false" onAction="#removeItemClicked" text="Remove Selected Item" />
+          <Button fx:id="searchItemButton" mnemonicParsing="false" onAction="#searchItemClicked" text="Search LIst" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>
